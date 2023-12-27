@@ -39,8 +39,8 @@ jobs:
         name: Login DockerHub
         uses: docker/login-action@v1
         with:
-          username: lty271104
-          password: LTYlty271104
+          username: 
+          password: 
 
       - 
         name: Build Image
