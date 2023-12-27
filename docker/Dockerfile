@@ -5,16 +5,16 @@ RUN apk add --no-cache --virtual .build-deps \
         musl-dev \
         libxml2-dev \
         libxslt-dev \
-    && apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://raw.githubusercontent.com/Lannamokia/nas-tools-unlock/master/package_list.txt)) \
-    && ln -sf /usr/bin/python3 /usr/bin/python \
-    && curl https://rclone.org/install.sh | bash \
-    && if [ "$(uname -m)" = "x86_64" ]; then ARCH=amd64; elif [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi \
+RUN apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://raw.githubusercontent.com/Lannamokia/nas-tools-unlock/master/package_list.txt)) \
+RUN ln -sf /usr/bin/python3 /usr/bin/python \
+RUN curl https://rclone.org/install.sh | bash \
+RUN if [ "$(uname -m)" = "x86_64" ]; then ARCH=amd64; elif [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi \
     && curl https://dl.min.io/client/mc/release/linux-${ARCH}/mc --create-dirs -o /usr/bin/mc \
     && chmod +x /usr/bin/mc \
-    && pip install --upgrade pip setuptools wheel \
+RUN pip install --upgrade pip setuptools wheel \
     && pip install cython \
     && pip install -r https://raw.githubusercontent.com/Lannamokia/nas-tools-unlock/master/requirements.txt \
-    && apk del --purge .build-deps \
+RUN apk del --purge .build-deps \
     && rm -rf /tmp/* /root/.cache /var/cache/apk/*
 COPY --chmod=755 ./rootfs /
 FROM scratch AS APP
